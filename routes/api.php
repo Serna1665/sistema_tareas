@@ -25,6 +25,7 @@ Route::prefix('tareas')->group(function () {
         Route::get('listar', 'listar');
         Route::post('crear', 'crear');
         Route::put('actualizar/{id}', 'actualizar');
+        Route::delete('eliminar/{id}', 'eliminar');
     });
 });
 
