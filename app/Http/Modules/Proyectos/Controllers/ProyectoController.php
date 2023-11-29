@@ -21,16 +21,8 @@ class ProyectoController extends Controller
 
     public function listar()
     {
-        try {
-            $proyectos = $this->proyectoRepository->listarConUsuarios();
-            return response()->json([
-                'proyectos' => $proyectos
-            ], Response::HTTP_OK);
-        } catch (\Exception $th) {
-            return response()->json([
-                'mensaje' => 'Error al obtener la lista de proyectos: ' . $th->getMessage()
-            ], Response::HTTP_BAD_REQUEST);
-        }
+        $proyecto = $this->proyectoRepository->listarConUsuarios();
+        return response()->json($proyecto, Response::HTTP_OK);
     }
 
     public function crear(CrearProyectoRequest $request)
