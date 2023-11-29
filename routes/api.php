@@ -1,18 +1,32 @@
 <?php
 
+use App\Http\Modules\Proyectos\Controllers\ProyectoController;
+use App\Http\Modules\Tareas\Controllers\TareaController;
+use App\Http\Modules\Usuarios\Controllers\UsuarioController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "api" middleware group. Make something great!
-|
-*/
+Route::prefix('usuarios')->group(function () {
+    Route::controller(UsuarioController::class)->group(function () {
+        Route::get('listar', 'listar');
+        Route::post('crear', 'crear');
+    });
+});
+
+Route::prefix('proyectos')->group(function () {
+    Route::controller(ProyectoController::class)->group(function () {
+        Route::get('listar', 'listar');
+        Route::post('crear', 'crear');
+    });
+});
+
+Route::prefix('tareas')->group(function () {
+    Route::controller(TareaController::class)->group(function () {
+        Route::get('listar', 'listar');
+        Route::post('crear', 'crear');
+        Route::put('actualizar/{id}', 'actualizar');
+    });
+});
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Modules\Tareas\Requests;
+namespace App\Http\Modules\Usuarios\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class CrearTareaRequest extends FormRequest
+class CrearUsuarioRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
-    public function authorize(): bool
+    public function authorize()
     {
         return true;
     }
@@ -25,13 +25,11 @@ class CrearTareaRequest extends FormRequest
     {
         return [
             'nombre' => 'required|string',
-            'descripcion' => 'required|string',
-            'fecha_inicio' => 'required|date',
-            'fecha_finalizacion' => 'required|date|after_or_equal:fecha_inicio',
-            'estado' => 'required|boolean',
-            'proyecto_id' => 'integer|required|exists:proyectos,id'
+            'correo' => 'required|email|unique:usuarios',
+            'contrasena' => 'required|string|min:8',
         ];
     }
+
 
     public function failedValidation(Validator $validator)
     {

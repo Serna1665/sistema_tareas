@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Modules\Tareas\Requests;
+namespace App\Http\Modules\Proyectos\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class CrearTareaRequest extends FormRequest
+class ActualizarProyectoRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,8 +28,6 @@ class CrearTareaRequest extends FormRequest
             'descripcion' => 'required|string',
             'fecha_inicio' => 'required|date',
             'fecha_finalizacion' => 'required|date|after_or_equal:fecha_inicio',
-            'estado' => 'required|boolean',
-            'proyecto_id' => 'integer|required|exists:proyectos,id'
         ];
     }
 
