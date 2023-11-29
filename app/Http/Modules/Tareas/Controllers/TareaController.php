@@ -53,7 +53,23 @@ class TareaController extends Controller
             ], Response::HTTP_OK);
         } catch (\Exception $th) {
             return response()->json([
-                'message' => 'Error al actualizar la tarea: ' . $th->getMessage()
+                'message' => 'Error al actualizar la tarea: ' , $th->getMessage()
+            ], Response::HTTP_BAD_REQUEST);
+        }
+    }
+
+    public function eliminar($id)
+    {
+        try {
+            $tarea = Tarea::findOrFail($id);
+            $tarea->delete();
+
+            return response()->json([
+                'message' => 'Tarea eliminada correctamente',
+            ], Response::HTTP_OK);
+        } catch (\Exception $th) {
+            return response()->json([
+                'message' => 'Error al eliminar la tarea: ' ,$th->getMessage()
             ], Response::HTTP_BAD_REQUEST);
         }
     }
