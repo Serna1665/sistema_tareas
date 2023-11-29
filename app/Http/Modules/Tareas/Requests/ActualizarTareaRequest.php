@@ -3,6 +3,8 @@
 namespace App\Http\Modules\Tareas\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class ActualizarTareaRequest extends FormRequest
 {
@@ -11,7 +13,7 @@ class ActualizarTareaRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -19,10 +21,20 @@ class ActualizarTareaRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array
+    public function rules()
     {
         return [
-            //
+            'nombre' => 'required|string',
+            'descripcion' => 'required|string',
+            'fecha_inicio' => 'required|date',
+            'fecha_finalizacion' => 'required|date|after_or_equal:fecha_inicio',
+            'estado' => 'required|boolean',
+            'proyecto_id' => 'integer|required|exists:proyectos,id'
         ];
+    }
+
+    public function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json($validator->errors(), 422));
     }
 }
